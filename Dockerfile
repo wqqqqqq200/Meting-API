@@ -21,7 +21,8 @@ RUN apk add --no-cache su-exec \
 
 COPY --from=builder /app /app
 
-RUN chmod +x /app/docker-entrypoint.sh \
+RUN sed -i 's/\r$//' /app/docker-entrypoint.sh \
+    && chmod +x /app/docker-entrypoint.sh \
     && mkdir -p /app/data \
     && chown -R meting:meting /app
 
