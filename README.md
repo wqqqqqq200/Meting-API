@@ -22,7 +22,8 @@
 | `song` | 单曲信息 | ✅ | ✅ |
 | `playlist` | 歌单 | ✅ | ✅ |
 | `artist` | 歌手歌曲 | ✅ | ❌ |
-| `search` | 搜索 | ✅ | ❌ |
+| `search` | 单曲搜索 | ✅ | ✅ |
+| `search_playlist` | 歌单搜索（`id` 填关键词） | ✅ | ✅ |
 | `url` | 播放链接 | ✅ | ✅ |
 | `lrc` | 歌词 | ✅ | ✅ |
 | `pic` | 封面图片 | ✅ | ✅ |
@@ -128,9 +129,14 @@ var meting_api='http://your-domain/api?server=:server&type=:type&id=:id&auth=:au
 ### API 请求示例
 
 ```
-GET /api?server=netease&type=playlist&id=7326220405
-GET /api?server=tencent&type=song&id=004Yi5BD3ksoAN
+GET /api?server=netease&type=playlist&id=6907557348
 GET /api?server=netease&type=url&id=22704470
+GET /api?server=netease&type=search&id=风筝误
+GET /api?server=netease&type=search_playlist&id=流行
+GET /api?server=tencent&type=search&id=风筝误
+GET /api?server=tencent&type=playlist&id=7326220405
+GET /api?server=tencent&type=song&id=004Yi5BD3ksoAN
+GET /api?server=tencent&type=search_playlist&id=抖音热歌
 GET /api?server=tencent&type=lrc&id=004Yi5BD3ksoAN
 ```
 

@@ -1,8 +1,10 @@
 import { get_playlist } from "./playlist.js";
 import { get_song_url, get_song_info, get_pic } from "./song.js";
 import { get_lyric } from "./lyric.js"
+import { get_search_songs } from "./search.js"
+import { get_search_playlists } from "./search_playlist.js"
 
-const support_type = ['url', 'pic', 'lrc', 'song', 'playlist']
+const support_type = ['url', 'pic', 'lrc', 'song', 'playlist', 'search', 'search_playlist']
 
 const handle = async (type, id, cookie = '', options = {}) => {
     let result;
@@ -21,6 +23,12 @@ const handle = async (type, id, cookie = '', options = {}) => {
             break
         case 'playlist':
             result = await get_playlist(id, cookie)
+            break
+        case 'search':
+            result = await get_search_songs(id, cookie)
+            break
+        case 'search_playlist':
+            result = await get_search_playlists(id, cookie)
             break
         default:
             return -1;

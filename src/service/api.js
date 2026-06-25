@@ -20,9 +20,9 @@ export default async (ctx) => {
     const p = new Providers()
 
     const query = ctx.req.query()
-    const server = query.server || 'tencent'
+    const server = query.server || 'netease'
     const type = query.type || 'playlist'
-    const id = query.id || '7326220405'
+    const id = query.id || '6907557348'
     const quality = query.quality?.toLowerCase()
 
     if (!p.get_provider_list().includes(server) || !p.get(server).support_type.includes(type)) {
@@ -70,7 +70,8 @@ export default async (ctx) => {
             const _ = String(x[i])
             if (!_.startsWith('@') && !_.startsWith('http') && _.length > 0) {
                 const qualityParam = i === 'url' && quality ? `&quality=${quality}` : ''
-                x[i] = `${get_url(ctx)}?server=${server}&type=${i}&id=${_}${qualityParam}`
+                const linkType = i === 'url' && type === 'search_playlist' ? 'playlist' : i
+                x[i] = `${get_url(ctx)}?server=${server}&type=${linkType}&id=${_}${qualityParam}`
             }
         }
         return x

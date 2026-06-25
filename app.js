@@ -546,7 +546,7 @@ app.get('/', (c) => {
                         <td><span class="param-name">server</span></td>
                         <td><span class="param-type">string</span></td>
                         <td><span class="param-optional">否</span></td>
-                        <td><span class="param-default">tencent</span></td>
+                        <td><span class="param-default">netease</span></td>
                         <td>音乐平台，可选值：<code>netease</code>（网易云音乐）、<code>tencent</code>（QQ音乐）</td>
                     </tr>
                     <tr>
@@ -560,8 +560,8 @@ app.get('/', (c) => {
                         <td><span class="param-name">id</span></td>
                         <td><span class="param-type">string</span></td>
                         <td><span class="param-optional">否</span></td>
-                        <td><span class="param-default">7326220405</span></td>
-                        <td>资源ID，如歌单ID、歌曲ID、歌手ID、搜索关键词等</td>
+                        <td><span class="param-default">6907557348</span></td>
+                        <td>资源ID，如歌单ID、歌曲ID、歌手ID；<code>search</code> / <code>search_playlist</code> 时填搜索关键词</td>
                     </tr>
                     <tr>
                         <td><span class="param-name">quality</span></td>
@@ -576,14 +576,14 @@ app.get('/', (c) => {
             <div class="section-subtitle">🎚️ 音质参数（quality）</div>
             <table class="param-table">
                 <thead>
-                    <tr><th>quality 值</th><th>QQ音乐 (tencent)</th><th>网易云 (netease)</th></tr>
+                    <tr><th>quality 值</th><th>网易云 (netease)</th><th>QQ音乐 (tencent)</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td><span class="param-name">128</span> / <span class="param-name">standard</span></td><td>128kbps MP3</td><td>标准音质</td></tr>
-                    <tr><td><span class="param-name">320</span> / <span class="param-name">exhigh</span></td><td>320kbps MP3</td><td>极高音质</td></tr>
-                    <tr><td><span class="param-name">flac</span> / <span class="param-name">lossless</span></td><td>无损 FLAC</td><td>无损</td></tr>
-                    <tr><td><span class="param-name">higher</span></td><td><span class="cross">✗</span></td><td>较高音质</td></tr>
-                    <tr><td><span class="param-name">hires</span></td><td><span class="cross">✗</span></td><td>Hi-Res</td></tr>
+                    <tr><td><span class="param-name">128</span> / <span class="param-name">standard</span></td><td>标准音质</td><td>128kbps MP3</td></tr>
+                    <tr><td><span class="param-name">320</span> / <span class="param-name">exhigh</span></td><td>极高音质</td><td>320kbps MP3</td></tr>
+                    <tr><td><span class="param-name">flac</span> / <span class="param-name">lossless</span></td><td>无损</td><td>无损 FLAC</td></tr>
+                    <tr><td><span class="param-name">higher</span></td><td>较高音质</td><td><span class="cross">✗</span></td></tr>
+                    <tr><td><span class="param-name">hires</span></td><td>Hi-Res</td><td><span class="cross">✗</span></td></tr>
                 </tbody>
             </table>
             <div style="font-size:12px;color:var(--text-secondary);margin-top:8px;">实际可获取的音质取决于 Cookie、会员权限及歌曲版权；非法 <code>quality</code> 值将返回 400</div>
@@ -597,7 +597,8 @@ app.get('/', (c) => {
                     <tr><td><span class="param-name">song</span></td><td>单曲信息</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
                     <tr><td><span class="param-name">playlist</span></td><td>歌单</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
                     <tr><td><span class="param-name">artist</span></td><td>歌手歌曲</td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td></tr>
-                    <tr><td><span class="param-name">search</span></td><td>搜索</td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td></tr>
+                    <tr><td><span class="param-name">search</span></td><td>单曲搜索</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td><span class="param-name">search_playlist</span></td><td>歌单搜索（id 填关键词）</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
                     <tr><td><span class="param-name">url</span></td><td>播放链接</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
                     <tr><td><span class="param-name">lrc</span></td><td>歌词</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
                     <tr><td><span class="param-name">pic</span></td><td>封面图片</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
@@ -608,7 +609,20 @@ app.get('/', (c) => {
             <div class="code-label">获取歌单 <span class="tag tag-text">URL</span></div>
             <div class="code-block">
                 <button class="copy-btn" onclick="copyCode(this)">复制</button>
-                <pre>${baseUrl}api?server=netease&type=playlist&id=6907557348</pre>
+                <pre>${baseUrl}api?server=netease&type=playlist&id=6907557348
+${baseUrl}api?server=tencent&type=playlist&id=7326220405</pre>
+            </div>
+            <div class="code-label">搜索单曲 <span class="tag tag-text">URL</span></div>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                <pre>${baseUrl}api?server=netease&type=search&id=风筝误
+${baseUrl}api?server=tencent&type=search&id=风筝误</pre>
+            </div>
+            <div class="code-label">搜索歌单（中文关键词） <span class="tag tag-text">URL</span></div>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                <pre>${baseUrl}api?server=netease&type=search_playlist&id=流行
+${baseUrl}api?server=tencent&type=search_playlist&id=抖音热歌</pre>
             </div>
             <div class="code-label">获取播放链接（指定音质） <span class="tag tag-text">URL</span></div>
             <div class="code-block">
@@ -619,7 +633,8 @@ ${baseUrl}api?server=tencent&type=url&id=004Yi5BD3ksoAN&quality=320</pre>
 
             <div class="section-subtitle">✅ 响应示例</div>
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab(event, 'tab-song')">song / playlist / artist / search</button>
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-song')">song / playlist / search</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-search-playlist')">search_playlist</button>
                 <button class="tab-btn" onclick="switchTab(event, 'tab-url')">url</button>
                 <button class="tab-btn" onclick="switchTab(event, 'tab-lrc')">lrc</button>
                 <button class="tab-btn" onclick="switchTab(event, 'tab-pic')">pic</button>
@@ -637,6 +652,23 @@ ${baseUrl}api?server=tencent&type=url&id=004Yi5BD3ksoAN&quality=320</pre>
     "pic": "https://example.com/api?server=netease&type=pic&id=xxx",
     "lrc": "https://example.com/api?server=netease&type=lrc&id=xxx",
     "id": "473403185"
+  }
+]</pre>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-search-playlist">
+                <div class="code-label">成功响应 <span class="tag tag-json">JSON</span> <span style="color:var(--success);font-weight:700;">200</span></div>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <pre>[
+  {
+    "title": "歌单名称",
+    "author": "创建者",
+    "pic": "https://example.com/cover.jpg",
+    "id": "8596628206",
+    "url": "https://example.com/api?server=netease&type=playlist&id=8596628206",
+    "trackCount": 452
   }
 ]</pre>
                 </div>
@@ -681,7 +713,7 @@ Location: https://img.example.com/cover.jpg</pre>
                     <tr>
                         <td><span class="error-code error-400">400</span></td>
                         <td>参数不合法（server、type 或 quality 不在支持范围内）</td>
-                        <td><code>{"status":400,"message":"server 参数不合法","param":{"server":"xxx","type":"song","id":"123"}}</code><br><code>{"status":400,"message":"quality 参数不合法","param":{"server":"tencent","quality":"invalid"}}</code></td>
+                        <td><code>{"status":400,"message":"server 参数不合法","param":{"server":"xxx","type":"song","id":"123"}}</code><br><code>{"status":400,"message":"quality 参数不合法","param":{"server":"netease","quality":"invalid"}}</code></td>
                     </tr>
                     <tr>
                         <td><span class="error-code error-403">403</span></td>

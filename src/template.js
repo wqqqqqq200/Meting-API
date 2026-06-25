@@ -9,7 +9,8 @@ const typeNames = {
     playlist: '歌单',
     song: '单曲',
     artist: '歌手',
-    search: '搜索',
+    search: '单曲搜索',
+    search_playlist: '歌单搜索',
     lrc: '歌词',
     pic: '封面',
     url: '链接'
