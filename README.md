@@ -58,7 +58,7 @@
 ### 手动部署
 
 ```bash
-git clone https://github.com/mikus-loli/Meting-API.git
+git clone https://github.com/wqqqqqq200/Meting-API.git
 cd Meting-API
 npm install
 node node.js
@@ -96,7 +96,7 @@ docker run -d --name meting \
 
 ### Vercel 部署
 
-<a href="https://vercel.com/import/project?template=https://github.com/mikus-loli/Meting-API"><img src="https://vercel.com/button" height="36"></a>
+<a href="https://vercel.com/import/project?template=https://github.com/wqqqqqq200/Meting-API"><img src="https://vercel.com/button" height="36"></a>
 
 点击按钮后按提示操作即可。Vercel 部署时 `OVERSEAS` 自动设为 `1`。
 

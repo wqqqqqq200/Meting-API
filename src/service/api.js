@@ -1,6 +1,7 @@
 import Providers from "../providers/index.js"
 import { format as lyricFormat, get_url } from "../util.js"
 import store from "../admin/store.js"
+import { isValidQuality } from "../quality.js"
 
 const parseCookieString = (cookieString) => {
     if (!cookieString) return {}
@@ -22,10 +23,16 @@ export default async (ctx) => {
     const server = query.server || 'tencent'
     const type = query.type || 'playlist'
     const id = query.id || '7326220405'
+    const quality = query.quality?.toLowerCase()
 
     if (!p.get_provider_list().includes(server) || !p.get(server).support_type.includes(type)) {
         ctx.status(400)
         return ctx.json({ status: 400, message: 'server 参数不合法', param: { server, type, id } })
+    }
+
+    if (!isValidQuality(server, quality)) {
+        ctx.status(400)
+        return ctx.json({ status: 400, message: 'quality 参数不合法', param: { server, quality } })
     }
 
     let cookie = ''
@@ -34,7 +41,7 @@ export default async (ctx) => {
         cookie = storedCookie.cookie
     }
 
-    let data = await p.get(server).handle(type, id, cookie)
+    let data = await p.get(server).handle(type, id, cookie, { quality })
 
     if (type === 'url') {
         let url = data
@@ -62,7 +69,8 @@ export default async (ctx) => {
         for (let i of ['url', 'pic', 'lrc']) {
             const _ = String(x[i])
             if (!_.startsWith('@') && !_.startsWith('http') && _.length > 0) {
-                x[i] = `${get_url(ctx)}?server=${server}&type=${i}&id=${_}`
+                const qualityParam = i === 'url' && quality ? `&quality=${quality}` : ''
+                x[i] = `${get_url(ctx)}?server=${server}&type=${i}&id=${_}${qualityParam}`
             }
         }
         return x

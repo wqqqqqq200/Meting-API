@@ -1,12 +1,30 @@
 import { request } from "./util.js"
 import { map_song_list } from "./util.js"
 
-export const get_song_url = async (id, cookie = '') => {
+const QUALITY_MAP = {
+    '128': { level: 'standard', encodeType: 'mp3' },
+    'standard': { level: 'standard', encodeType: 'mp3' },
+    'higher': { level: 'higher', encodeType: 'mp3' },
+    '320': { level: 'exhigh', encodeType: 'mp3' },
+    'exhigh': { level: 'exhigh', encodeType: 'mp3' },
+    'flac': { level: 'lossless', encodeType: 'flac' },
+    'lossless': { level: 'lossless', encodeType: 'flac' },
+    'hires': { level: 'hires', encodeType: 'flac' },
+}
+
+const resolveQuality = (quality) => {
+    if (!quality) return { level: 'standard', encodeType: 'flac' }
+    return QUALITY_MAP[quality.toLowerCase()] || { level: 'standard', encodeType: 'flac' }
+}
+
+export const get_song_url = async (id, cookie = '', options = {}) => {
+
+    const { level, encodeType } = resolveQuality(options.quality)
 
     const data = {
         ids: '[' + id + ']',
-        level: 'standard',
-        encodeType: 'flac',
+        level,
+        encodeType,
     }
 
     let res = {}

@@ -6,14 +6,14 @@ import { get_search_songs } from "./search.js"
 
 const support_type = ['url', 'lrc', 'song', 'playlist', 'artist', 'search', 'pic']
 
-const handle = async (type, id, cookie = '') => {
+const handle = async (type, id, cookie = '', options = {}) => {
     let result;
     switch (type) {
         case 'lrc':
             result = await get_lyric(id, cookie)
             break
         case 'url':
-            result = await get_song_url(id, cookie)
+            result = await get_song_url(id, cookie, options)
             break
         case 'pic':
             result = (await get_song_info(id, cookie))[0].pic

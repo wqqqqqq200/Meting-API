@@ -4,7 +4,7 @@ import { get_lyric } from "./lyric.js"
 
 const support_type = ['url', 'pic', 'lrc', 'song', 'playlist']
 
-const handle = async (type, id, cookie = '') => {
+const handle = async (type, id, cookie = '', options = {}) => {
     let result;
     switch (type) {
         case 'lrc':
@@ -14,7 +14,7 @@ const handle = async (type, id, cookie = '') => {
             result = await get_pic(id, cookie)
             break
         case 'url':
-            result = await get_song_url(id, cookie)
+            result = await get_song_url(id, cookie, options)
             break
         case 'song':
             result = await get_song_info(id, cookie)

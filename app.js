@@ -461,10 +461,10 @@ app.get('/', (c) => {
             <h1>Meting API</h1>
             <p>多平台音乐 API 服务</p>
             <div class="badges">
-                <a href="https://github.com/mikus-loli/Meting-API" style="text-decoration:none;">
+                <a href="https://github.com/wqqqqqq200/Meting-API" style="text-decoration:none;">
                     <img alt="Github" src="https://img.shields.io/badge/Github-Meting-green">
-                    <img alt="Forks" src="https://img.shields.io/github/forks/mikus-loli/Meting-API">
-                    <img alt="Stars" src="https://img.shields.io/github/stars/mikus-loli/Meting-API">
+                    <img alt="Forks" src="https://img.shields.io/github/forks/wqqqqqq200/Meting-API">
+                    <img alt="Stars" src="https://img.shields.io/github/stars/wqqqqqq200/Meting-API">
                 </a>
             </div>
         </div>
@@ -475,7 +475,7 @@ app.get('/', (c) => {
             <div class="info-grid">
                 <div class="info-item">
                     <div class="info-label">版本</div>
-                    <div class="info-value">1.1.2</div>
+                    <div class="info-value">2.0.0</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">运行环境</div>
@@ -518,7 +518,7 @@ app.get('/', (c) => {
                     </span>
                     <span class="link-arrow">→</span>
                 </a>
-                <a class="link-card" href="https://github.com/mikus-loli/Meting-API" target="_blank">
+                <a class="link-card" href="https://github.com/wqqqqqq200/Meting-API" target="_blank">
                     <span class="link-icon">📖</span>
                     <span class="link-info">
                         <span class="link-title">项目文档</span>
@@ -563,8 +563,30 @@ app.get('/', (c) => {
                         <td><span class="param-default">7326220405</span></td>
                         <td>资源ID，如歌单ID、歌曲ID、歌手ID、搜索关键词等</td>
                     </tr>
+                    <tr>
+                        <td><span class="param-name">quality</span></td>
+                        <td><span class="param-type">string</span></td>
+                        <td><span class="param-optional">否</span></td>
+                        <td><span class="param-default">standard</span></td>
+                        <td>音质档位，仅影响 <code>type=url</code> 及返回结果中的播放链接；不传时保持默认行为</td>
+                    </tr>
                 </tbody>
             </table>
+
+            <div class="section-subtitle">🎚️ 音质参数（quality）</div>
+            <table class="param-table">
+                <thead>
+                    <tr><th>quality 值</th><th>QQ音乐 (tencent)</th><th>网易云 (netease)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><span class="param-name">128</span> / <span class="param-name">standard</span></td><td>128kbps MP3</td><td>标准音质</td></tr>
+                    <tr><td><span class="param-name">320</span> / <span class="param-name">exhigh</span></td><td>320kbps MP3</td><td>极高音质</td></tr>
+                    <tr><td><span class="param-name">flac</span> / <span class="param-name">lossless</span></td><td>无损 FLAC</td><td>无损</td></tr>
+                    <tr><td><span class="param-name">higher</span></td><td><span class="cross">✗</span></td><td>较高音质</td></tr>
+                    <tr><td><span class="param-name">hires</span></td><td><span class="cross">✗</span></td><td>Hi-Res</td></tr>
+                </tbody>
+            </table>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:8px;">实际可获取的音质取决于 Cookie、会员权限及歌曲版权；非法 <code>quality</code> 值将返回 400</div>
 
             <div class="section-subtitle">🔢 类型支持矩阵</div>
             <table class="param-table">
@@ -583,10 +605,16 @@ app.get('/', (c) => {
             </table>
 
             <div class="section-subtitle">📨 请求示例</div>
-            <div class="code-label">请求URL <span class="tag tag-text">URL</span></div>
+            <div class="code-label">获取歌单 <span class="tag tag-text">URL</span></div>
             <div class="code-block">
                 <button class="copy-btn" onclick="copyCode(this)">复制</button>
                 <pre>${baseUrl}api?server=netease&type=playlist&id=6907557348</pre>
+            </div>
+            <div class="code-label">获取播放链接（指定音质） <span class="tag tag-text">URL</span></div>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                <pre>${baseUrl}api?server=netease&type=url&id=22704470&quality=lossless
+${baseUrl}api?server=tencent&type=url&id=004Yi5BD3ksoAN&quality=320</pre>
             </div>
 
             <div class="section-subtitle">✅ 响应示例</div>
@@ -605,7 +633,7 @@ app.get('/', (c) => {
   {
     "name": "歌曲名称",
     "artist": "歌手名",
-    "url": "https://example.com/api?server=netease&type=url&id=xxx",
+    "url": "https://example.com/api?server=netease&type=url&id=xxx&quality=320",
     "pic": "https://example.com/api?server=netease&type=pic&id=xxx",
     "lrc": "https://example.com/api?server=netease&type=lrc&id=xxx",
     "id": "473403185"
@@ -652,8 +680,8 @@ Location: https://img.example.com/cover.jpg</pre>
                 <tbody>
                     <tr>
                         <td><span class="error-code error-400">400</span></td>
-                        <td>参数不合法（server 或 type 不在支持范围内）</td>
-                        <td><code>{"status":400,"message":"server 参数不合法","param":{"server":"xxx","type":"song","id":"123"}}</code></td>
+                        <td>参数不合法（server、type 或 quality 不在支持范围内）</td>
+                        <td><code>{"status":400,"message":"server 参数不合法","param":{"server":"xxx","type":"song","id":"123"}}</code><br><code>{"status":400,"message":"quality 参数不合法","param":{"server":"tencent","quality":"invalid"}}</code></td>
                     </tr>
                     <tr>
                         <td><span class="error-code error-403">403</span></td>
@@ -665,7 +693,7 @@ Location: https://img.example.com/cover.jpg</pre>
 
         </div>
     </div>
-    <footer>Powered by <a href="https://github.com/mikus-loli/Meting-API" target="_blank">Meting-API</a></footer>
+    <footer>Powered by <a href="https://github.com/wqqqqqq200/Meting-API" target="_blank">Meting-API</a></footer>
     <script>
     function copyCode(btn) {
         const pre = btn.parentElement.querySelector('pre');

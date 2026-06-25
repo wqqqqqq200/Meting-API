@@ -1,6 +1,20 @@
 import { changeUrlQuery } from "./util.js"
 import config from "../../config.js"
 
+const QUALITY_MAP = {
+    '128': { s: 'M500', e: '.mp3' },
+    'standard': { s: 'M500', e: '.mp3' },
+    '320': { s: 'M800', e: '.mp3' },
+    'exhigh': { s: 'M800', e: '.mp3' },
+    'flac': { s: 'F000', e: '.flac' },
+    'lossless': { s: 'F000', e: '.flac' },
+}
+
+const resolveQuality = (quality) => {
+    if (!quality) return QUALITY_MAP['128']
+    return QUALITY_MAP[quality.toLowerCase()] || QUALITY_MAP['128']
+}
+
 const parseCookieString = (cookieString) => {
     if (!cookieString) return {}
     const cookies = {}
@@ -13,16 +27,13 @@ const parseCookieString = (cookieString) => {
     return cookies
 }
 
-export const get_song_url = async (id, cookie = '') => {
+export const get_song_url = async (id, cookie = '', options = {}) => {
 
     id = id.split(',')
     const cookieObj = parseCookieString(cookie)
     let uin = cookieObj.uin || ''
     let qqmusic_key = cookieObj.qqmusic_key || ''
-    const typeObj = {
-        s: 'M500',
-        e: '.mp3',
-    }
+    const typeObj = resolveQuality(options.quality)
 
     const file = id.map(e => `${typeObj.s}${e}${e}${typeObj.e}`)
     const guid = (Math.random() * 10000000).toFixed(0);
