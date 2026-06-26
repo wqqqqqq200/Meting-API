@@ -561,7 +561,7 @@ app.get('/', (c) => {
                         <td><span class="param-type">string</span></td>
                         <td><span class="param-optional">否</span></td>
                         <td><span class="param-default">6907557348</span></td>
-                        <td>资源ID，如歌单ID、歌曲ID、歌手ID；<code>search</code> / <code>search_playlist</code> 时填搜索关键词</td>
+                        <td>资源ID，如歌单ID、歌曲ID、歌手ID；<code>search</code> / <code>search_playlist</code> 时填搜索关键词；<code>fm</code> 时填漫游模式（可选）</td>
                     </tr>
                     <tr>
                         <td><span class="param-name">quality</span></td>
@@ -599,6 +599,7 @@ app.get('/', (c) => {
                     <tr><td><span class="param-name">artist</span></td><td>歌手歌曲</td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td></tr>
                     <tr><td><span class="param-name">search</span></td><td>单曲搜索</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
                     <tr><td><span class="param-name">search_playlist</span></td><td>歌单搜索（id 填关键词）</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                    <tr><td><span class="param-name">fm</span></td><td>私人漫游（id 填模式，留空为默认漫游）</td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td></tr>
                     <tr><td><span class="param-name">url</span></td><td>播放链接</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
                     <tr><td><span class="param-name">lrc</span></td><td>歌词</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
                     <tr><td><span class="param-name">pic</span></td><td>封面图片</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
@@ -623,6 +624,35 @@ ${baseUrl}api?server=tencent&type=search&id=风筝误</pre>
                 <button class="copy-btn" onclick="copyCode(this)">复制</button>
                 <pre>${baseUrl}api?server=netease&type=search_playlist&id=流行
 ${baseUrl}api?server=tencent&type=search_playlist&id=抖音热歌</pre>
+            </div>
+            <div class="code-label">私人漫游 <span class="tag tag-text">URL</span></div>
+            <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                <pre>${baseUrl}api?server=netease&type=fm
+${baseUrl}api?server=netease&type=fm&id=FAMILIAR
+${baseUrl}api?server=netease&type=fm&id=SCENE_RCMD:FOCUS</pre>
+            </div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:8px;line-height:1.7;">
+                <code>fm</code> 的 <code>id</code> 对应客户端「私人漫游」模式，留空等同 <code>DEFAULT</code>。需登录 Cookie 才能获得个性化推荐。
+                <table class="param-table" style="margin-top:10px;font-size:12px;">
+                    <thead><tr><th>id 值</th><th>说明</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="param-name">留空 / DEFAULT</span></td><td>默认漫游：综合听歌记录做常规个性化推荐</td></tr>
+                        <tr><td><span class="param-name">FAMILIAR</span></td><td>熟悉模式：多推收藏、常听、关注过的歌手与相似曲风</td></tr>
+                        <tr><td><span class="param-name">EXPLORE</span></td><td>探索模式：多推较少听过的新歌、冷门歌，拓展曲库</td></tr>
+                        <tr><td><span class="param-name">SCENE_RCMD</span></td><td>场景漫游：按生活场景推荐（建议配合子模式）</td></tr>
+                        <tr><td><span class="param-name">aidj</span></td><td>AI DJ：AI 串烧混剪，歌曲之间带过渡衔接</td></tr>
+                    </tbody>
+                </table>
+                <div style="margin-top:8px;"><strong>SCENE_RCMD 子模式</strong>（id 格式 <code>SCENE_RCMD:子模式</code>）：</div>
+                <table class="param-table" style="margin-top:6px;font-size:12px;">
+                    <thead><tr><th>子模式</th><th>说明</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="param-name">EXERCISE</span></td><td>运动：节奏明快、适合锻炼</td></tr>
+                        <tr><td><span class="param-name">FOCUS</span></td><td>专注：适合工作、学习，偏轻音乐/纯音乐</td></tr>
+                        <tr><td><span class="param-name">NIGHT_EMO</span></td><td>深夜：适合夜晚、情绪向的慢歌</td></tr>
+                    </tbody>
+                </table>
             </div>
             <div class="code-label">获取播放链接（指定音质） <span class="tag tag-text">URL</span></div>
             <div class="code-block">

@@ -5,6 +5,7 @@ export default {
         "artist": { "show": true, "value": "12441107" },
         "search": { "show": true, "value": "KN33S0XXX" },
         "search_playlist": { "show": false, "value": "流行" },
+        "fm": { "show": true, "value": "DEFAULT" },
         "lrc": { "show": false, "value": "2015217630" },
         "url": { "show": false, "value": "473403185" },
     },

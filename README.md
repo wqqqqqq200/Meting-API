@@ -24,9 +24,32 @@
 | `artist` | 歌手歌曲 | ✅ | ❌ |
 | `search` | 单曲搜索 | ✅ | ✅ |
 | `search_playlist` | 歌单搜索（`id` 填关键词） | ✅ | ✅ |
+| `fm` | 私人漫游（`id` 填模式，[见下方说明](#私人漫游-fm-模式)） | ✅ | ❌ |
 | `url` | 播放链接 | ✅ | ✅ |
 | `lrc` | 歌词 | ✅ | ✅ |
 | `pic` | 封面图片 | ✅ | ✅ |
+
+### 私人漫游（`fm`）模式
+
+`type=fm` 时，`id` 参数对应网易云客户端「私人漫游」的模式，留空则等同 `DEFAULT`。
+
+| `id` 值 | 说明 |
+|---------|------|
+| 留空 / `DEFAULT` | **默认漫游**：综合听歌记录做常规个性化推荐 |
+| `FAMILIAR` | **熟悉模式**：多推收藏、常听、关注过的歌手与相似曲风 |
+| `EXPLORE` | **探索模式**：多推较少听过的新歌、冷门歌，拓展曲库 |
+| `SCENE_RCMD` | **场景漫游**：按生活场景推荐（建议配合子模式，见下表） |
+| `aidj` | **AI DJ**：AI 串烧混剪，歌曲之间带过渡衔接 |
+
+`SCENE_RCMD` 场景子模式（`id` 格式为 `SCENE_RCMD:子模式`）：
+
+| 子模式 | 说明 |
+|--------|------|
+| `EXERCISE` | **运动**：节奏明快、适合锻炼 |
+| `FOCUS` | **专注**：适合工作、学习，偏轻音乐/纯音乐 |
+| `NIGHT_EMO` | **深夜**：适合夜晚、情绪向的慢歌 |
+
+> 需配置网易云登录 Cookie 才能获得针对账号的个性化推荐；未登录时每次通常只返回少量歌曲。
 
 ## 地区限制
 
@@ -69,9 +92,11 @@ node node.js
 
 ### Docker 部署
 
+镜像地址：[w3126197382/meting-api](https://hub.docker.com/r/w3126197382/meting-api)
+
 ```bash
-docker pull ghcr.io/mikus-loli/meting-api:latest
-docker run -d --name meting -p 3000:3000 ghcr.io/mikus-loli/meting-api:latest
+docker pull w3126197382/meting-api:latest
+docker run -d --name meting -p 3000:3000 w3126197382/meting-api:latest
 ```
 
 持久化数据：
@@ -80,7 +105,7 @@ docker run -d --name meting -p 3000:3000 ghcr.io/mikus-loli/meting-api:latest
 docker run -d --name meting \
   -p 3000:3000 \
   -v ./data:/app/data \
-  ghcr.io/mikus-loli/meting-api:latest
+  w3126197382/meting-api:latest
 ```
 
 自定义端口和用户：
@@ -92,8 +117,10 @@ docker run -d --name meting \
   -e UID=1000 \
   -e GID=1000 \
   -v ./data:/app/data \
-  ghcr.io/mikus-loli/meting-api:latest
+  w3126197382/meting-api:latest
 ```
+
+宝塔升级：拉取新镜像后重建容器，镜像填 `w3126197382/meting-api:latest`（或指定版本如 `v1.0.2`），保留原有 `-v ...:/app/data` 挂载即可。
 
 ### Vercel 部署
 
@@ -133,6 +160,9 @@ GET /api?server=netease&type=playlist&id=6907557348
 GET /api?server=netease&type=url&id=22704470
 GET /api?server=netease&type=search&id=风筝误
 GET /api?server=netease&type=search_playlist&id=流行
+GET /api?server=netease&type=fm
+GET /api?server=netease&type=fm&id=FAMILIAR
+GET /api?server=netease&type=fm&id=SCENE_RCMD:FOCUS
 GET /api?server=tencent&type=search&id=风筝误
 GET /api?server=tencent&type=playlist&id=7326220405
 GET /api?server=tencent&type=song&id=004Yi5BD3ksoAN
@@ -431,7 +461,7 @@ https://localhost:8099 {
 使用 `-v` 挂载数据目录：
 
 ```bash
-docker run -d -p 3000:3000 -v ./data:/app/data ghcr.io/mikus-loli/meting-api:latest
+docker run -d -p 3000:3000 -v ./data:/app/data w3126197382/meting-api:latest
 ```
 
 ### 忘记管理后台路径？

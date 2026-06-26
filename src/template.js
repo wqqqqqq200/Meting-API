@@ -11,6 +11,7 @@ const typeNames = {
     artist: '歌手',
     search: '单曲搜索',
     search_playlist: '歌单搜索',
+    fm: '私人漫游',
     lrc: '歌词',
     pic: '封面',
     url: '链接'
