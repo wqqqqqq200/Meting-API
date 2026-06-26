@@ -219,7 +219,7 @@ Object.keys(example).map(provider => {
 
 html += `
     </div>
-    <footer>Powered by <a href="https://github.com/wqqqqqq200/Meting-API" target="_blank">Meting-API</a></footer>
+    <footer>Powered by <a href="https://github.com/qq01-hub/Meting-API" target="_blank">Meting-API</a></footer>
 </body>
 </html>
 `

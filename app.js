@@ -461,10 +461,10 @@ app.get('/', (c) => {
             <h1>Meting API</h1>
             <p>多平台音乐 API 服务</p>
             <div class="badges">
-                <a href="https://github.com/wqqqqqq200/Meting-API" style="text-decoration:none;">
+                <a href="https://github.com/qq01-hub/Meting-API" style="text-decoration:none;">
                     <img alt="Github" src="https://img.shields.io/badge/Github-Meting-green">
-                    <img alt="Forks" src="https://img.shields.io/github/forks/wqqqqqq200/Meting-API">
-                    <img alt="Stars" src="https://img.shields.io/github/stars/wqqqqqq200/Meting-API">
+                    <img alt="Forks" src="https://img.shields.io/github/forks/qq01-hub/Meting-API">
+                    <img alt="Stars" src="https://img.shields.io/github/stars/qq01-hub/Meting-API">
                 </a>
             </div>
         </div>
@@ -518,7 +518,7 @@ app.get('/', (c) => {
                     </span>
                     <span class="link-arrow">→</span>
                 </a>
-                <a class="link-card" href="https://github.com/wqqqqqq200/Meting-API" target="_blank">
+                <a class="link-card" href="https://github.com/qq01-hub/Meting-API" target="_blank">
                     <span class="link-icon">📖</span>
                     <span class="link-info">
                         <span class="link-title">项目文档</span>
@@ -755,7 +755,7 @@ Location: https://img.example.com/cover.jpg</pre>
 
         </div>
     </div>
-    <footer>Powered by <a href="https://github.com/wqqqqqq200/Meting-API" target="_blank">Meting-API</a></footer>
+    <footer>Powered by <a href="https://github.com/qq01-hub/Meting-API" target="_blank">Meting-API</a></footer>
     <script>
     function copyCode(btn) {
         const pre = btn.parentElement.querySelector('pre');
